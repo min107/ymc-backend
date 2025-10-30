@@ -2,4 +2,4 @@ fastapi
 uvicorn[standard]
 python-dotenv
 requests
-gunicorn  <-- 이 줄을 추가해 주세요!
+gunicorn

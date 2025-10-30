@@ -14,8 +14,8 @@ GEMINI_API_KEY = os.getenv('GEMINI_API_KEY')
 
 # Google Gemini API Settings
 GEMINI_MODEL = os.getenv('GEMINI_MODEL', 'gemini-1.5-flash')
-GEMINI_TEXT_URL = f'https://generativelanguage.googleapis.com/v1/models/{GEMINI_MODEL}:generateContent'
-GEMINI_IMAGE_URL = f'https://generativelanguage.googleapis.com/v1/models/{GEMINI_MODEL}:generateContent'
+GEMINI_TEXT_URL = f'https://generativelanguage.googleapis.com/v1beta/models/{GEMINI_MODEL}:generateContent'
+GEMINI_IMAGE_URL = f'https://generativelanguage.googleapis.com/v1beta/models/{GEMINI_MODEL}:generateContent'
 
 API_TOKEN = os.getenv('API_TOKEN', 'defaultapitoken')
 

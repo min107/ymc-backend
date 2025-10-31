@@ -13,9 +13,9 @@ load_dotenv(env_path)
 GEMINI_API_KEY = os.getenv('GEMINI_API_KEY')
 API_TOKEN = os.getenv('API_TOKEN', 'defaultapitoken')
 
-# --- 2. API URL (v1beta 사용) ---
-# 모델 이름을 URL에서 제거했습니다.
-BASE_URL = "https://generativelanguage.googleapis.com/v1beta/models"
+# --- 2. API URL (v1 / v1beta 분리!) ---
+V1_BASE_URL = "https://generativelanguage.googleapis.com/v1/models"
+V1BETA_BASE_URL = "https://generativelanguage.googleapis.com/v1beta/models"
 
 
 app = FastAPI()
@@ -39,12 +39,12 @@ class ChatRequest(BaseModel):
     prompt: str
 
 # --- 4. 채팅 API (/chat) ---
-# 'gemini-pro' (텍스트 모델)를 직접 호출합니다.
+# 'gemini-pro' (텍스트 모델)를 'v1' URL로 호출합니다.
 @app.post("/chat", dependencies=[Depends(verify_api_key)])
 async def chat(request: ChatRequest):
     
-    # 텍스트 전용 URL
-    TEXT_URL = f'{BASE_URL}/gemini-pro:generateContent'
+    # 텍스트 전용 URL (v1 사용)
+    TEXT_URL = f'{V1_BASE_URL}/gemini-pro:generateContent'
     
     payload = {
         "contents": [
@@ -66,12 +66,12 @@ async def chat(request: ChatRequest):
         raise HTTPException(status_code=500, detail={"error": str(e)})
 
 # --- 5. 이미지 API (/generate-image) ---
-# 'gemini-1.5-flash' (이미지 모델)를 직접 호출합니다.
+# 'gemini-1.5-flash' (이미지 모델)를 'v1beta' URL로 호출합니다.
 @app.post("/generate-image", dependencies=[Depends(verify_api_key)])
 async def generate_image(request: Request):
     
-    # 이미지 전용 URL
-    IMAGE_URL = f'{BASE_URL}/gemini-1.5-flash:generateContent'
+    # 이미지 전용 URL (v1beta 사용)
+    IMAGE_URL = f'{V1BETA_BASE_URL}/gemini-1.5-flash:generateContent'
 
     try:
         data = await request.json()
@@ -106,7 +106,8 @@ async def http_exception_handler(request: Request, exc: HTTPException):
 @app.get("/")
 def root():
     # '버전'을 추가해서 최신 코드가 적용됐는지 확인합니다.
-    return {"status": "ok", "version": "final_split_model"}
+    return {"status": "ok", "version": "final_split_v1_and_v1beta"}
+
 
 
 

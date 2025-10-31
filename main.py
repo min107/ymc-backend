@@ -108,4 +108,5 @@ async def http_exception_handler(request: Request, exc: HTTPException):
 
 @app.get("/")
 def root():
-    return {"status": "ok"}
+    return {"status": "ok", "version": "v2_test"}
+

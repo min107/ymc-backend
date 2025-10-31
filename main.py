@@ -13,7 +13,7 @@ load_dotenv(env_path)
 GEMINI_API_KEY = os.getenv('GEMINI_API_KEY')
 
 # Google Gemini API Settings
-GEMINI_MODEL = os.getenv('GEMINI_MODEL', 'gemini-pro')
+GEMINI_MODEL = os.getenv('GEMINI_MODEL', 'gemini-1.5-flash')
 GEMINI_TEXT_URL = f'https://generativelanguage.googleapis.com/v1beta/models/{GEMINI_MODEL}:generateContent'
 GEMINI_IMAGE_URL = f'https://generativelanguage.googleapis.com/v1beta/models/{GEMINI_MODEL}:generateContent'
 
@@ -109,6 +109,7 @@ async def http_exception_handler(request: Request, exc: HTTPException):
 @app.get("/")
 def root():
     return {"status": "ok", "version": "v2_test"}
+
 
 
 

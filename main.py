@@ -26,8 +26,8 @@ app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
     allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
+    allow_methods=["GET", "POST", "OPTIONS"],
+    allow_headers=["Content-Type", "X-API-Key", "Authorization"],
 )
 
 api_key_header = APIKeyHeader(name="X-API-KEY")
@@ -109,5 +109,6 @@ async def http_exception_handler(request: Request, exc: HTTPException):
 @app.get("/")
 def root():
     return {"status": "ok", "version": "v2_test"}
+
 
 
